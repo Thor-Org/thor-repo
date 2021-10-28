@@ -35,8 +35,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <h1>Generate&nbsp;Your Encryption&nbsp;Key</h1>
-                        <p>Paragraph</p><?php
+                        <h1>Generate&nbsp;Your Encryption&nbsp;Key</h1><?php
 $servername = "97.102.250.88";
 $username = "root";
 $password = "Sadie1289";
@@ -50,7 +49,42 @@ if ($conn->connect_error) {
 }
 echo "Connected successfully";
 ?>
-<button class="btn btn-primary" data-bs-toggle="tooltip" data-bss-tooltip="" type="button" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;"><i class="fa fa-refresh"></i>&nbsp; &nbsp;Generate Key</button>
+
+<?php
+          if(isset($_POST['button1'])) {
+              echo "This is Button1 that is selected. Key Generated! <br>";
+              // $sql = "SELECT strike_time, lat, lon FROM Lightning_Data.lightning_record";
+              $sql = "SELECT * FROM Lightning_Data.lightning_record
+                      ORDER BY RAND()
+                      LIMIT 1";
+              $result = $conn->query($sql);
+
+              if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                  $strike_time = $row["strike_time"];
+                  $lat = $row["lat"];
+                  $lon =$row["lon"];
+                  echo "Strike time: $strike_time lat: $lat lon: $lon ";
+                  echo $lon;
+                  // echo "strike_time: " . $row["strike_time"]. " - lat: " . $row["lat"]. " - lon: " . $row["lon"]. "<br>";
+                  // echo "strike_time: " . $strike_time. " - lat: " . $lat. " - lon: " . $lon. "<br>";
+                }
+                $result->free();
+              } else {
+                echo "0 results";
+              }
+          }
+          if(isset($_POST['button2'])) {
+            // echo "This is Button2 that is selected with" .$strike_time.;
+            echo $strike_time;
+            echo $lat;
+            echo $lon;
+        }
+      ?>
+
+                        <p>Paragraph</p>
+                        <form method="post"><button class="btn btn-primary" data-bs-toggle="tooltip" data-bss-tooltip="" type="submit" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;">&nbsp;<i class="fa fa-refresh"></i> &nbsp;Generate Key</button><button class="btn btn-primary" data-bs-toggle="tooltip" value="button1" name="button1" type="submit" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;">   Generate Key (real)</button></form>
                     </div>
                 </div>
             </div>
@@ -77,19 +111,19 @@ echo "Connected successfully";
                             <tbody style="color: var(--bs-light);">
                                 <tr>
                                     <td style="color: var(--bs-white);">Strength:</td>
-                                    <td>Cell 2</td>
+                                    <td><div>1 <?php echo $strike_time; ?></div>Cell 2</td>
                                 </tr>
                                 <tr>
                                     <td>Lifespan:</td>
                                     <td>Cell 4</td>
                                 </tr>
                                 <tr>
-                                    <td>Attribute:</td>
-                                    <td>Cell 4</td>
+                                    <td>Lat:</td>
+                                    <td><div>2 <?php echo $lat; ?></div>Cell 4</td>
                                 </tr>
                                 <tr>
-                                    <td>Attribute:</td>
-                                    <td>Cell 4</td>
+                                    <td>Lon:</td>
+                                    <td><div>3<?php echo $lon; ?></div>Cell 4</td>
                                 </tr>
                             </tbody>
                         </table>
