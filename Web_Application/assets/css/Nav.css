@@ -1,18 +1,18 @@
-@media (min-width: 992px) {
-  #mainNav .nav-link.active:hover {
-    color: var(--bs-gray-700);
-  }
+#mainNav .nav-link.active:hover {
+  color: var(--bs-gray-700);
 }
 
-@media (min-width: 992px) {
-  #mainNav .nav-link.active {
-    outline: none;
-    color: var(--bs-blue);
-    background-color: rgba(255,255,255,.3);
-  }
+#mainNav .nav-link.active {
+  outline: none;
+  color: var(--bs-blue);
+  background-color: rgba(255,255,255,.3);
 }
 
 #mainNav .nav-link:hover {
+  color: var(--bs-gray-700);
+}
+
+.btn:hover {
   color: var(--bs-gray-700);
 }
 
