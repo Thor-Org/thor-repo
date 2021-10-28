@@ -39,8 +39,22 @@
                     <div class="col">
                         <h1>Generate&nbsp;Your Encryption&nbsp;Key</h1>
                         <p style="margin: 0px;">Click the button below to generate an md5 encryption</p>
-                        <p>key from our set of lightning data.</p><div><?php 
+                        <p>key from our set of lightning data.</p><div>Php test:<?php 
 phpinfo();
+?>
+                        <?php
+$servername = "97.102.250.88";
+$username = "root";
+$password = "Sadie1289";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+echo "Connected successfully";
 ?></div>
                         <form method="post"><button class="btn btn-primary" data-bs-toggle="tooltip" data-bss-tooltip="" type="button" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;"><i class="fa fa-refresh"></i>&nbsp; &nbsp;Generate Key</button><button class="btn btn-primary" data-bs-toggle="tooltip" type="button" name="button1" value="button1" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;"><i class="fa fa-refresh"></i>   Generate Key (real)</button></form>
                     </div>
