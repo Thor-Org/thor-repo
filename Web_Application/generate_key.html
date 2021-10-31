@@ -81,7 +81,7 @@ echo "Server: Connected<br>";
                 echo "0 results";
               }
 
-              $sql2 = "SELECT * FROM Lightning_Data.lightning_record
+              $sql2 = "SELECT * FROM Lightning_Data.keys
                       ORDER BY RAND()
                       LIMIT 1";
               $result2 = $conn->query($sql2);
