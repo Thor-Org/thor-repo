@@ -86,6 +86,16 @@ echo "Server: Connected<br>";
                       LIMIT 1";
               $result2 = $conn->query($sql2);
 
+              if ($result2->num_rows > 0) {
+                // output data of each row
+                while($row2 = $result2->fetch_assoc()) {
+                  echo "test";
+                }
+                $result2->free();
+              } else {
+                echo "0 keys";
+              }
+
           }
           if(isset($_POST['button2'])) {
             // echo "This is Button2 that is selected with" .$strike_time.;
