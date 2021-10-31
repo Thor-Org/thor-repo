@@ -65,11 +65,6 @@ echo "Server: Connected<br>";
                       LIMIT 1";
               $result = $conn->query($sql);
 
-              $sql2 = "SELECT * FROM Lightning_Data.keys
-              ORDER BY RAND()
-              LIMIT 1;";
-              $result2 = $conn->query($sql2);
-
               if ($result->num_rows > 0) {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
@@ -86,17 +81,6 @@ echo "Server: Connected<br>";
               } else {
                 echo "0 results";
               }
-
-              if ($result2->num_rows > 0) {
-                // output data of each row
-                while($row = $result2->fetch_assoc()) {
-                  $key = $row["key"];
-                  echo "Key: $key ";
-                }
-                $result->free();
-              } else {
-                echo "0 results";
-              }
           }
           if(isset($_POST['button2'])) {
             // echo "This is Button2 that is selected with" .$strike_time.;
