@@ -64,6 +64,11 @@ echo "Server: Connected<br>";
                       LIMIT 1";
               $result = $conn->query($sql);
 
+              $sql2 = "SELECT * FROM Lightning_Data.lightning_record
+                      ORDER BY RAND()
+                      LIMIT 1";
+              $result2 = $conn->query($sql2);
+
               if ($result->num_rows > 0) {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
