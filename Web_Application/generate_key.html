@@ -89,7 +89,6 @@ echo "Server: Connected<br>";
                 // output data of each row
                 while($row2 = $result2->fetch_assoc()) {
                   $key =$row2["key"];
-                  echo "TEST KEY DISPLAY: ";
                   echo $key;
                 }
                 $result2->free();
@@ -107,7 +106,7 @@ echo "Server: Connected<br>";
       ?>
 
 </div>
-                        <form method="post"><button class="btn btn-primary" data-bs-toggle="tooltip" value="button1" name="button1" type="submit" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;">   Generate Key (real)</button></form>
+                        <form method="post"><button class="btn btn-primary" data-bs-toggle="tooltip" value="button1" name="button1" type="submit" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;"><i class="fa fa-refresh"></i>   Generate Key</button></form>
                     </div>
                 </div>
             </div><?php
