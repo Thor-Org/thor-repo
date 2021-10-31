@@ -57,38 +57,57 @@ echo "Server: Connected<br>";
 ?>
 
 <?php
-          if(isset($_POST['button1'])) {
-              echo "This is Button1 that is selected. Key Generated! <br>";
-              // $sql = "SELECT strike_time, lat, lon FROM Lightning_Data.lightning_record";
-              $sql = "SELECT * FROM Lightning_Data.lightning_record
-                      ORDER BY RAND()
-                      LIMIT 1";
-              $result = $conn->query($sql);
+          if(isset($_POST['button1'])) {
+              echo "This is Button1 that is selected. Key Generated! <br>";
+              // $sql = "SELECT strike_time, lat, lon FROM Lightning_Data.lightning_record";
+              $sql = "SELECT * FROM Lightning_Data.lightning_record
+                      ORDER BY RAND()
+                      LIMIT 1";
+              $result = $conn->query($sql);
 
-              if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) {
-                  $strike_time = $row["strike_time"];
-                  $lat = $row["lat"];
-                  $lon =$row["lon"];
-                  $tex = "Key: ";
-                  echo "Strike time: $strike_time lat: $lat lon: $lon ";
-                  echo $lon;
-                  // echo "strike_time: " . $row["strike_time"]. " - lat: " . $row["lat"]. " - lon: " . $row["lon"]. "<br>";
-                  // echo "strike_time: " . $strike_time. " - lat: " . $lat. " - lon: " . $lon. "<br>";
-                }
-                $result->free();
-              } else {
-                echo "0 results";
-              }
-          }
-          if(isset($_POST['button2'])) {
-            // echo "This is Button2 that is selected with" .$strike_time.;
-            echo $strike_time;
-            echo $lat;
-            echo $lon;
-        }
-      ?>
+
+              $sql2 = "SELECT * FROM Lightning_Data.keys
+              ORDER BY RAND()
+              LIMIT 1;";
+              $result2 = $conn->query($sql2);
+
+
+              if ($result->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                  $strike_time = $row["strike_time"];
+                  $lat = $row["lat"];
+                  $lon =$row["lon"];
+                  $tex = "Key: ";
+                  echo "Strike time: $strike_time lat: $lat lon: $lon ";
+                  echo $lon;
+                  // echo "strike_time: " . $row["strike_time"]. " - lat: " . $row["lat"]. " - lon: " . $row["lon"]. "<br>";
+                  // echo "strike_time: " . $strike_time. " - lat: " . $lat. " - lon: " . $lon. "<br>";
+                }
+                $result->free();
+              } else {
+                echo "0 results";
+              }
+
+
+              if ($result2->num_rows > 0) {
+                // output data of each row
+                while($row = $result2->fetch_assoc()) {
+                  $key = $row["key"];
+                  echo "Key: $key ";
+                }
+                $result->free();
+              } else {
+                echo "0 results";
+              }
+          }
+          if(isset($_POST['button2'])) {
+            // echo "This is Button2 that is selected with" .$strike_time.;
+            echo $strike_time;
+            echo $lat;
+            echo $lon;
+        }
+      ?>
 
 </div><button class="btn btn-primary" data-bs-toggle="tooltip" data-bss-tooltip="" type="button" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;"><i class="fa fa-refresh"></i>&nbsp; &nbsp;Generate Key</button>
                         <form method="post"><button class="btn btn-primary" data-bs-toggle="tooltip" value="button1" name="button1" type="submit" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;">   Generate Key (real)</button></form>
@@ -96,7 +115,7 @@ echo "Server: Connected<br>";
                 </div>
             </div><?php
 echo $tex;
-echo $strike_time;
+echo $key;
 ?>
         </div>
     </header>
