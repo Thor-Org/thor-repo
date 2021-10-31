@@ -89,7 +89,8 @@ echo "Server: Connected<br>";
               if ($result2->num_rows > 0) {
                 // output data of each row
                 while($row2 = $result2->fetch_assoc()) {
-                  echo "test";
+                  $key =$row["key"];
+                  echo $lon;
                 }
                 $result2->free();
               } else {
