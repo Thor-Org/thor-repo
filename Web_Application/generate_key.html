@@ -59,7 +59,6 @@ echo "Server: Connected<br>";
 <?php
           if(isset($_POST['button1'])) {
               echo "This is Button1 that is selected. Key Generated! <br>";
-              // $sql = "SELECT strike_time, lat, lon FROM Lightning_Data.lightning_record";
               $sql = "SELECT * FROM Lightning_Data.lightning_record
                       ORDER BY RAND()
                       LIMIT 1";
