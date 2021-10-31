@@ -89,7 +89,7 @@ echo "Server: Connected<br>";
               if ($result2->num_rows > 0) {
                 // output data of each row
                 while($row2 = $result2->fetch_assoc()) {
-                  $key =$row["key"];
+                  $key =$row2["key"];
                   echo "TEST KEY DISPLAY: ";
                   echo $key;
                 }
