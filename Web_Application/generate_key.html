@@ -64,7 +64,7 @@ echo "Server: Connected<br>";
                       LIMIT 1";
               $result = $conn->query($sql);
 
-              $sql2 = "SELECT * FROM Lightning_Data.key
+              $sql2 = "SELECT * FROM Lightning_Data.keys
                       ORDER BY RAND()
                       LIMIT 1";
               $result2 = $conn->query($sql2);
@@ -80,6 +80,17 @@ echo "Server: Connected<br>";
                   echo $lon;
                   // echo "strike_time: " . $row["strike_time"]. " - lat: " . $row["lat"]. " - lon: " . $row["lon"]. "<br>";
                   // echo "strike_time: " . $strike_time. " - lat: " . $lat. " - lon: " . $lon. "<br>";
+                }
+                $result->free();
+              } else {
+                echo "0 results";
+              }
+
+              if ($result2->num_rows > 0) {
+                // output data of each row
+                while($row = $result->fetch_assoc()) {
+                  $key = $row["key"];
+                  echo "Strike time: $strike_time lat: $lat 
                 }
                 $result->free();
               } else {
