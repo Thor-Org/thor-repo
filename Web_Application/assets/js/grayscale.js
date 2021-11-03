@@ -25,10 +25,26 @@
 
     // Collapse Navbar
     var collapseNavbar = function() {
-
+      /*
+      if (
+        "IntersectionObserver" in window &&
+        "IntersectionObserverEntry" in window &&
+        "intersectionRatio" in window.IntersectionObserverEntry.prototype
+      ) {
+        let observer = new IntersectionObserver(entries => {
+            if (entries[0].boundingClientRect.y < 64)
+                {
+                  mainNav.classList.add("navbar-shrink");
+                } else {
+                  mainNav.classList.remove("navbar-shrink");
+                }
+        });
+        observer.observe(document.querySelector("#problem"));
+      }
+      */
       var scrollTop = (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop;
-
-      if (scrollTop > 100) {
+      
+      if (scrollTop > 64) {
         mainNav.classList.add("navbar-shrink");
       } else {
         mainNav.classList.remove("navbar-shrink");

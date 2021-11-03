@@ -50,3 +50,12 @@
   outline: none;
 }
 
+@media (min-width: 992px) {
+  #mainNav.navbar-shrink {
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    border-bottom: 0px;
+    transition: all .3s ease-in-out;
+  }
+}
+
