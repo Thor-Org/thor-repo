@@ -72,6 +72,9 @@ echo "Server: Connected<br>";
                   $strike_time = $row["strike_time"];
                   $lat = $row["lat"];
                   $lon =$row["lon"];
+                  $rise = $row["rise_time"];
+                  $fall = $row["fall"];
+                  $peak = $row["peak_cur"];
                   $tex = "Key: ";
                   //echo "Strike time: $strike_time lat: $lat lon: $lon ";
                   //echo $lon;
@@ -139,7 +142,7 @@ echo $key;
                             <tbody style="color: var(--bs-light);">
                                 <tr>
                                     <td style="color: var(--bs-white);">Strength:</td>
-                                    <td>Cell 2</td>
+                                    <td><div><?php echo $rise_time;?> seconds</div>Cell 2</td>
                                 </tr>
                                 <tr>
                                     <td>Lifespan:</td>
