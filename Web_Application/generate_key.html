@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
     <link rel="stylesheet" href="assets/css/Footer-Dark.css">
+    <link rel="stylesheet" href="assets/css/Highlight-Blue.css">
     <link rel="stylesheet" href="assets/css/Nav.css">
     <link rel="stylesheet" href="assets/css/Team-Boxed.css">
     <link rel="stylesheet" href="assets/css/Team-Grid.css">
@@ -148,12 +149,42 @@ echo $key;
                         <table class="table table-borderless">
                             <tbody style="color: var(--bs-light);">
                                 <tr>
-                                    <td style="color: var(--bs-white);">Strength:</td>
-                                    <td><div><?php echo $fall;?> fall</div></td>
+                                    <td style="color: var(--bs-white);">
+                                        <section class="highlight-blue">
+                                            <div class="container">
+                                                <div class="intro">
+                                                    <h2 class="text-center"><div><?php echo $fall;?> <br>fall</div></h2>
+                                                    <p class="text-center">lifetime</p>
+                                                </div>
+                                                <div class="buttons"></div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                    <td>
+                                        <section class="highlight-blue">
+                                            <div class="container">
+                                                <div class="intro">
+                                                    <h2 class="text-center"><div><?php echo $rise;?> <br>seconds</div></h2>
+                                                    <p class="text-center">seconds</p>
+                                                </div>
+                                                <div class="buttons"></div>
+                                            </div>
+                                        </section>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Lifespan:</td>
-                                    <td><div><?php echo $rise;?> seconds</div></td>
+                                    <td>
+                                        <section class="highlight-blue">
+                                            <div class="container">
+                                                <div class="intro">
+                                                    <h2 class="text-center"><div><?php echo $peak;?> <br>MWh</div></h2>
+                                                    <p class="text-center">power output</p>
+                                                </div>
+                                                <div class="buttons"></div>
+                                            </div>
+                                        </section>
+                                    </td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td>Maximum Power</td>
