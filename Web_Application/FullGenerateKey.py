@@ -98,6 +98,8 @@ def generate_key(data):
     return key
 
 def main():
+    print("YO LUKE IM YO FATHA!!!")
+    exit(0)
     ################################
     # Gather credential information
     ################################

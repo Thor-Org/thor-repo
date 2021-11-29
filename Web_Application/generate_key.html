@@ -127,7 +127,7 @@ echo $key;
                 <div class="col-auto col-lg-8 col-xl-10 mx-auto">
                     <h2 style="font-size: 43px;margin: 0px;">Key</h2><h2 style="font-size: 43px;margin: 0px;"><?php echo $key ?>
 <?php
-$command = escapeshellcmd('python3 hi.py');
+$command = escapeshellcmd('python3 FullGenerateKey.py');
 $output = shell_exec($command);
 echo "Output: ";
 echo $output;
