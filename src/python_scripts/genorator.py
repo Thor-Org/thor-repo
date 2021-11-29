@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from statistics import mean
 import random
 from scipy.stats import entropy
+#import CryptRndTest
 
 # returns data frame (df) and word list of all fields imported
 def read_data():
@@ -72,13 +73,14 @@ def histogram(data):
 # histrogram of all fields to compare
 def hisoComparison(data1, data2, data3):
     sns.set(style="whitegrid")
+    sns.displot(data1, kde=True)
 
     fig, axs=plt.subplots(1, 3, figsize=(15, 6))
     axs[0].hist(data1, 50, color = "r")
     axs[0].set_title("Data1")
 
     axs[1].hist(data2, 50, color = "m") 
-    axs[1].set_title("Data1")
+    axs[1].set_title("Data2")
 
     axs[2].hist(data3, 50, color = "k")
     axs[2].set_title("Data3")
@@ -155,7 +157,7 @@ def version7Gen(df, version6):
     # Rayleigh distribution: https://math.stackexchange.com/questions/153097/flattening-a-2d-normal-distribution
     # a way to flatten curve
     version7 = 7
-    
+
 def main():
 
     # df: df (data frame) is all data from provided 00.txt file in an object
