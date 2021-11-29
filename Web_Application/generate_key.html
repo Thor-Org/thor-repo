@@ -124,7 +124,14 @@ echo $key;
         <div class="container">
             <div class="row">
                 <div class="col-auto col-lg-8 col-xl-10 mx-auto">
-                    <h2 style="font-size: 43px;margin: 0px;">Key</h2><h2 style="font-size: 43px;margin: 0px;"><?php echo $key ?></h2>
+                    <h2 style="font-size: 43px;margin: 0px;">Key</h2><h2 style="font-size: 43px;margin: 0px;"><?php echo $key ?>
+<?php
+                         $command_exec = escapeshellcmd('FullGenerateKey.py');
+                         $str_output = shell_exec($command_exec);
+                         echo "Output:";
+                         echo $str_output;
+                      ?>
+</h2>
                     <h2 style="font-size: 43px;margin: 0px;">BIOGRAPHY</h2>
                 </div>
             </div>
@@ -146,11 +153,11 @@ echo $key;
                                 </tr>
                                 <tr>
                                     <td>Lifespan:</td>
-                                    <td><div><?php echo $rise_time;?> seconds</div></td>
+                                    <td><div><?php echo $rise;?> seconds</div></td>
                                 </tr>
                                 <tr>
                                     <td>Maximum Power</td>
-                                    <td><div><?php echo $peak_cur;?> MWh</div>Cell 4</td>
+                                    <td><div><?php echo $peak;?> MWh</div>Cell 4</td>
                                 </tr>
                                 <tr>
                                     <td>Attribute:</td>
