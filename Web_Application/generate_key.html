@@ -127,10 +127,9 @@ echo $key;
                 <div class="col-auto col-lg-8 col-xl-10 mx-auto">
                     <h2 style="font-size: 43px;margin: 0px;">Key</h2><h2 style="font-size: 43px;margin: 0px;"><?php echo $key ?>
 <?php
-$command_exec = escapeshellcmd('FullGenerateKey.py');
-$str_output = shell_exec($command_exec);
-echo "Output:";
-echo $str_output;
+$command = escapeshellcmd('python FullGenerateKey.py');
+$output = shell_exec($command);
+echo $output;
 ?>
 </h2>
                     <h2 style="font-size: 43px;margin: 0px;">BIOGRAPHY</h2>
