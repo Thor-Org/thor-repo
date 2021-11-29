@@ -129,7 +129,7 @@ echo $key;
 <?php
 $command1 = escapeshellcmd("python3 MD5Hash.py $key");
 $output = shell_exec($command1);
-echo "Output: ";
+echo "<br>Hash: ";
 echo $output;
 
 ?>
