@@ -18,7 +18,7 @@ from sys import argv, stdout
 # <Internal Imports End>
 
 # <External Imports Start>
-import mysql.connector
+#import mysql.connector
 # <External Imports End>
 
 # <Global Objects Start>
