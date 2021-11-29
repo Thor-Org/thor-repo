@@ -59,10 +59,16 @@ def main():
     # Create the MD5 hash for every key given
     ################################
     while (1):
-        key = stdin.readline().rstrip()
-        if len(key) == 0:
-            break
+        if len(argv) > 1:
+            key = argv[1]
+        else:
+            key = stdin.readline().rstrip()
+            if len(key) == 0:
+                break
+
         stdout.write(f'{createMD5hash(key)}\n')
+        if len(argv) > 1:
+            break
 
 if __name__ == "__main__":
     main()
