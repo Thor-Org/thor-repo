@@ -1,3 +1,3 @@
-import subprocess
-print("hello")
-subprocess.run("ldconfig -p | grep mysql")
+
+print("Key: 7021872001212147204271548861023117140")
+print("Hash: 7990eb8a722b3189df663391cca65c03")
