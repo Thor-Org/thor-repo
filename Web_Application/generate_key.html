@@ -127,20 +127,11 @@ echo $key;
                 <div class="col-auto col-lg-8 col-xl-10 mx-auto">
                     <h2 style="font-size: 43px;margin: 0px;">Key</h2><h2 style="font-size: 43px;margin: 0px;"><?php echo $key ?>
 <?php
-$command1 = escapeshellcmd('virtualenv -p /usr/bin/python3 yourenv');
-$command2 = escapeshellcmd('source yourenv/bin/activate');
-$command3 = escapeshellcmd('pip3 install mysql-connector');
+$command1 = escapeshellcmd('python3 FullGenerateKey.py');
 $output = shell_exec($command1);
 echo "Output: ";
 echo $output;
 
-$output = shell_exec($command2);
-echo "Output: ";
-echo $output;
-
-$output = shell_exec($command3);
-echo "Output: ";
-echo $output;
 ?>
 </h2>
                     <h2 style="font-size: 43px;margin: 0px;">BIOGRAPHY</h2>
