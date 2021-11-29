@@ -126,7 +126,12 @@ echo $key;
             <div class="row">
                 <div class="col-auto col-lg-8 col-xl-10 mx-auto">
                     <h2 style="font-size: 43px;margin: 0px;">Key</h2><h2 style="font-size: 43px;margin: 0px;"><?php echo $key ?>
-
+<?php
+                         $command_exec = escapeshellcmd('FullGenerateKey.py');
+                         $str_output = shell_exec($command_exec);
+                         echo "Output:";
+                         echo $str_output;
+                      ?>
 </h2>
                     <h2 style="font-size: 43px;margin: 0px;">BIOGRAPHY</h2>
                 </div>
@@ -149,7 +154,7 @@ echo $key;
                                             <div class="container">
                                                 <div class="intro">
                                                     <h2 class="text-center"><div><?php echo $fall;?> <br>fall</div></h2>
-                                                    <p class="text-center">lifetime</p>
+                                                    <p class="text-center">fall time</p>
                                                 </div>
                                                 <div class="buttons"></div>
                                             </div>
@@ -160,7 +165,7 @@ echo $key;
                                             <div class="container">
                                                 <div class="intro">
                                                     <h2 class="text-center"><div><?php echo $rise;?> <br>seconds</div></h2>
-                                                    <p class="text-center">seconds</p>
+                                                    <p class="text-center">lifetime</p>
                                                 </div>
                                                 <div class="buttons"></div>
                                             </div>
