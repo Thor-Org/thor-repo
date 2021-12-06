@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from statistics import mean
 import random
 from scipy.stats import entropy
+from hashlib import md5
 
 # returns data frame (df) and word list of all fields imported
 def read_data():
@@ -74,20 +75,22 @@ def hisoComparison(data1, data2, data3):
     
     sns.set(style="whitegrid")
 
-    fig, axs=plt.subplots(1, 3, figsize=(15, 6))
+    fig, axs=plt.subplots(1, 2, figsize=(15, 6))
     axs[0].hist(data1, 50, color = "r")
-    axs[0].set_title("Data1")
+    axs[0].set_title("Milestone 2 Distribution")
+    axs[0].set_xlabel(f'Key values per 100Million')
+    axs[0].set_ylabel('Distribution')
 
     axs[1].hist(data2, 50, color = "m") 
-    axs[1].set_title("Data1")
-
-    axs[2].hist(data3, 50, color = "k")
-    axs[2].set_title("Data3")
+    axs[1].set_title("Milestone 3 Distribution")
+    axs[1].set_xlabel(f'Key values per 100Billion')
+    axs[1].set_ylabel('Distribution')
 
     plt.show()
 
 
 
+    '''
     sns.set(rc={"figure.figsize": (15, 6)})
 
     
@@ -112,9 +115,8 @@ def hisoComparison(data1, data2, data3):
 
     plt.show()
 
+    '''
 
-
-    
 
 # generates a list of random numbers from random library for baseline
 def version0Gen(df):
@@ -212,34 +214,43 @@ def main():
     # printVar(df)
 
     
-
+    # generates all versions of the key value based on lightning data
     v0 = version0Gen(df)
-    # print(f'Entrphy of V0: {entropy(v0):.4}')
-
     v1 = version1Gen(df)
-    # print(f'Entrphy of V1: {entropy(v1):.4}')
-
     v2 = version2Gen(df)
-    # print(f'Entrphy of V2: {entropy(v2):.4}')
-
     v3 = version3Gen(df, v2)
-    # print(f'Entrphy of V3: {entropy(v3):.4}')
-
     v4 = version4Gen(df)
-    # print(f'Entrphy of V4: {entropy(v4):.4}')
-
     v5 = version5Gen(df, v4)
-    # print(f'Entrphy of V5: {entropy(v5):.4}')
-
     v6 = version6Gen(df, v5)
-    # print(f'Entrphy of V6: {entropy(v6):.4}')
-
     v7 = version7Gen(df, v6)
 
+    # prints entrophy of all versions
+    # print(f'Entrphy of V0: {entropy(v0):.5}')
+    # print(f'Entrphy of V1: {entropy(v1):.5}')
+    # print(f'Entrphy of V2: {entropy(v2):.4}')
+    # print(f'Entrphy of V3: {entropy(v3):.4}')
+    # print(f'Entrphy of V4: {entropy(v4):.4}')
+    # print(f'Entrphy of V5: {entropy(v5):.4}')
+    # print(f'Entrphy of V6: {entropy(v6):.5}')
 
-    # hisoComparison(v1, v5, v6)
-    hisoComparison(v0, v1, v6)
+    # prints all numbers in v6
+    for number in v6:
+        print(int(number))
+
+
+
+
+    # gernerates histograms used for senior design presentation
+    hisoComparison(v1, v6, v6)
     # scatterPlot(df, v6)
+
+    # makes a line graph of all data points IOT display iteration
+    plt.plot(list(df['Range'])[:-1], v6, color='blue', marker='|')
+    plt.title('Lightning strike', fontsize=14)
+    plt.xlabel('Year', fontsize=1)
+    plt.ylabel('Number Generated', fontsize=14)
+    plt.grid(True)
+    plt.show()
 
 
 
