@@ -241,11 +241,11 @@ def main():
 
 
     # gernerates histograms used for senior design presentation
-    hisoComparison(v1, v6, v6)
+    hisoComparison(v1, v5, v5)
     # scatterPlot(df, v6)
 
     # makes a line graph of all data points IOT display iteration
-    plt.plot(list(df['Range'])[:-1], v6, color='blue', marker='|')
+    plt.plot(list(df['Range'])[:-1], v5, color='blue', marker='|')
     plt.title('Lightning strike', fontsize=14)
     plt.xlabel('Year', fontsize=1)
     plt.ylabel('Number Generated', fontsize=14)
