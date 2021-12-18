@@ -15,7 +15,13 @@ class DataPoint:
 
     def get_next_index(self, class_list):
         n = len(class_list[self.row])
+        n_digits = len(str(n))
+        num_len = len(str(self.data))
+
         next_index = (int(self.data / n)) % n
+        next_index = (int(self.data /pow(10, num_len - n_digits))) % n
+
+        
         
         i = 0
         # if we get a number with flag used recently, we skip, and reflip flag for later use
@@ -254,7 +260,6 @@ def main():
             print(f'Entrphy of {name:20}: NaN')
 
 
-
     # generates all versions of the key value based on lightning data
     v0 = version0Gen(df)
     v1 = version1Gen(df)
@@ -294,7 +299,7 @@ def main():
     
 
     # generates random number
-    for i in range(100000):
+    for i in range(1000):
 
         
         r1_index = r1.get_next_index(test_class)
@@ -322,26 +327,43 @@ def main():
     
     print(f'Entrphy of V8: {entropy(v8, base=len(v8)):.5}')
 
-
+    '''
     plt.scatter(v8, rang)
+    plt.title('Lightning strike', fontsize=14)
+    plt.xlabel('Year', fontsize=1)
+    plt.ylabel('Number Generated', fontsize=14)
     plt.grid(True)
     plt.show()
 
     hisoComparison(v1, v8, v5)
 
     plt.plot(rang, v8)
-    plt.grid(True)
-    plt.show()
-
-    '''
-    # makes a line graph of all data points IOT display iteration
-    plt.plot(list(df['Range'])[:-1], v5, color='blue', marker='|')
     plt.title('Lightning strike', fontsize=14)
     plt.xlabel('Year', fontsize=1)
     plt.ylabel('Number Generated', fontsize=14)
     plt.grid(True)
     plt.show()
     '''
+
+    sns.set(style="whitegrid")
+    fig, axs=plt.subplots(1, 3, figsize=(15, 6))
+    axs[0].hist(v8, 50, color = "r")
+    axs[0].set_title("V8 Histogram")
+    axs[0].set_xlabel(f'Key values per 100Million')
+    axs[0].set_ylabel('Distribution')
+
+    axs[1].plot(rang, v8, color = "m") 
+    axs[1].set_title("V8 Line Graph")
+    axs[1].set_xlabel(f'Dot per stike')
+    axs[1].set_ylabel('Number size')
+
+    axs[2].scatter(rang, v8, color = "m") 
+    axs[2].set_title("V8 Scatter")
+    axs[2].set_xlabel(f'Dot per strike')
+    axs[2].set_ylabel('Number size')
+    plt.show()
+
+
 
 
 
