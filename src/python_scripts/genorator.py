@@ -25,20 +25,8 @@ class DataPoint:
 
             # once we have skipped over the old once, we can reuse
             class_list[self.row][old_index].flag = 0
-            
-
-            if( i > 30):
-                print('Error with row: ' + str(self.row) + ' ' +str(next_index) + ' ' +str(i))
-            
-
-        print(self.data, next_index)
-
 
         return next_index
-
-
-
-
 
 # returns data frame (df) and word list of all fields imported
 def read_data():
@@ -150,6 +138,25 @@ def hisoComparison(data1, data2, data3):
 
     '''
 
+# make all fields the same number of digits
+def weight_fields(data_list, num_size):
+        max_len = 0
+        for i in range(len(data_list)):
+            num_len = len(str(int(data_list[i])))
+
+            if num_len > max_len:
+                max_len = num_len
+
+
+            if num_len < num_size:
+                data_list[i] = data_list[i] * pow(10, (num_size - num_len))
+
+            if num_len > num_size:
+                data_list[i] = data_list[i] / pow(10, (num_size - num_len))
+
+        print(data_list[0])
+        print(max_len)
+        return data_list
 
 # generates a list of random numbers from random library for baseline
 def version0Gen(df):
@@ -232,11 +239,14 @@ def main():
 
 
     print('generating new fields...')
+
+    
+
     # adding test fields by removing numbers before decimal point (101.1234 -> 1234)
-    df['TestLatitude'] = (df['Latitude'] % 1) * 100000000
-    df['TestLongitude'] = (df['Longitude'] % 1) * 100000000
-    df['TestEllipseAngle'] = df['EllipseAngle'] * 100000
-    df['TestNano'] = df['Nanosecond'] % 100000000
+    df['TestLatitude'] = (df['Latitude'] % 1)
+    df['TestLongitude'] = (df['Longitude'] % 1)
+    df['TestEllipseAngle'] = df['EllipseAngle']
+    df['TestNano'] = df['Nanosecond'] 
 
     # adding new fields to masterWordList
     masterWordList.append('TestLatitude')
@@ -244,6 +254,15 @@ def main():
     masterWordList.append('TestEllipseAngle')
     masterWordList.append('TestNano')
     print('fields generation complete')
+
+    # prints entrphy of all rows
+    for name in masterWordList:
+        try:
+            temp = weight_fields(df[name].values.T.tolist(), 9)
+            print(f'Entrphy of {name}: {entropy(temp, base=len(temp)):.5}')
+        except:
+            print(f'{name} not working')
+
 
     
     print('generating all latest versions...')
@@ -291,26 +310,35 @@ def main():
 
     #print(len(data_list))
 
-    
+    '''
     test.append(df['TestLatitude'].values.T.tolist())
     test.append(df['TestLongitude'].values.T.tolist())
     test.append(df['TestEllipseAngle'].values.T.tolist())
     test.append(df['TestNano'].values.T.tolist())
+    '''
+
+    
+
+    test.append(weight_fields(df['TestLatitude'].values.T.tolist(), 9))
+    test.append(weight_fields(df['TestLongitude'].values.T.tolist(), 9))
+    test.append(weight_fields(df['TestEllipseAngle'].values.T.tolist(), 9))
+    test.append(weight_fields(df['TestNano'].values.T.tolist(), 9))
+
+                
 
 
+    # adding weighted data to our class list
     test_class = [[], [], [], []]
     for i in range(0,4):
         for j in range(0,1000):
             test_class[i].append(DataPoint(row = i, data=int(test[i][j]), flag=0))
-        print('added ' + str(i))
 
 
     r1 = test_class[0][0]
     r2 = test_class[1][0]
     r3 = test_class[2][0]
     r4 = test_class[3][0]
-    print('r1 bellow')
-    print(r1)
+
     
     output = []
     n = 1000
@@ -334,7 +362,7 @@ def main():
 
 
         number = r1.data + r2.data + r3.data + r4.data
-        print(r1_index, r2_index, r3_index, r4_index, int(number))
+        # print(r1_index, r2_index, r3_index, r4_index, int(number))
 
         output.append(int(number))
 
