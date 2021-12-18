@@ -7,6 +7,39 @@ import random
 from scipy.stats import entropy
 from hashlib import md5
 
+class DataPoint:
+    def __init__(self, row, data, flag):
+        self.data = data
+        self.flag = flag
+        self.row = row
+
+    def get_next_index(self, class_list, n):
+        next_index = (int(self.data / n)) % n
+        
+        i = 0
+        # if we get a number with flag used recently, we skip, and reflip flag for later use
+        while class_list[self.row][next_index].flag == 1:
+            i = i+1
+            old_index = next_index
+            next_index = (old_index + pow(i, 2)) % n
+
+            # once we have skipped over the old once, we can reuse
+            class_list[self.row][old_index].flag = 0
+            
+
+            if( i > 30):
+                print('Error with row: ' + str(self.row) + ' ' +str(next_index) + ' ' +str(i))
+            
+
+        print(self.data, next_index)
+
+
+        return next_index
+
+
+
+
+
 # returns data frame (df) and word list of all fields imported
 def read_data():
     # inports the data from local csv
@@ -193,9 +226,12 @@ def main():
 
     # df: df (data frame) is all data from provided 00.txt file in an object
     # masterWordList: all fields used in data frame
+    print('reading data...')
     df, masterWordList = read_data()
+    print('data import complete')
 
 
+    print('generating new fields...')
     # adding test fields by removing numbers before decimal point (101.1234 -> 1234)
     df['TestLatitude'] = (df['Latitude'] % 1) * 100000000
     df['TestLongitude'] = (df['Longitude'] % 1) * 100000000
@@ -207,13 +243,10 @@ def main():
     masterWordList.append('TestLongitude')
     masterWordList.append('TestEllipseAngle')
     masterWordList.append('TestNano')
-
-
-    # prints the stddev of all fields
-    # printStandardDev(df)
-    # printVar(df)
+    print('fields generation complete')
 
     
+    print('generating all latest versions...')
     # generates all versions of the key value based on lightning data
     v0 = version0Gen(df)
     v1 = version1Gen(df)
@@ -223,6 +256,7 @@ def main():
     v5 = version5Gen(df, v4)
     v6 = version6Gen(df, v5)
     v7 = version7Gen(df, v6)
+    print('verion generation complete')
 
     # prints entrophy of all versions
     # print(f'Entrphy of V0: {entropy(v0):.5}')
@@ -233,16 +267,14 @@ def main():
     # print(f'Entrphy of V5: {entropy(v5):.4}')
     # print(f'Entrphy of V6: {entropy(v6):.5}')
 
-    # prints all numbers in v6
-    for number in v6:
-        print(int(number))
 
-
-
-
+    print('Plotting hist compare')
     # gernerates histograms used for senior design presentation
-    hisoComparison(v1, v5, v5)
+    #hisoComparison(v1, v5, v5)
     # scatterPlot(df, v6)
+    print('Graphing complate')
+
+    '''
 
     # makes a line graph of all data points IOT display iteration
     plt.plot(list(df['Range'])[:-1], v5, color='blue', marker='|')
@@ -252,15 +284,74 @@ def main():
     plt.grid(True)
     plt.show()
 
+    '''
+
+    test = []
+    #data_list = df.values.tolist()
+
+    #print(len(data_list))
+
+    
+    test.append(df['TestLatitude'].values.T.tolist())
+    test.append(df['TestLongitude'].values.T.tolist())
+    test.append(df['TestEllipseAngle'].values.T.tolist())
+    test.append(df['TestNano'].values.T.tolist())
+
+
+    test_class = [[], [], [], []]
+    for i in range(0,4):
+        for j in range(0,1000):
+            test_class[i].append(DataPoint(row = i, data=int(test[i][j]), flag=0))
+        print('added ' + str(i))
+
+
+    r1 = test_class[0][0]
+    r2 = test_class[1][0]
+    r3 = test_class[2][0]
+    r4 = test_class[3][0]
+    print('r1 bellow')
+    print(r1)
+    
+    output = []
+    n = 1000
+    # generate 20 random numbers
+    for i in range(1000):
+
+        
+        r1_index = r1.get_next_index(test_class, 1000)
+        r2_index = r2.get_next_index(test_class, 1000)
+        r3_index = r3.get_next_index(test_class, 1000)
+        r4_index = r4.get_next_index(test_class, 1000)
+        
+        r1 = test_class[0][r1_index]
+        r1.flag = 1
+        r2 = test_class[1][r2_index]
+        r2.flag = 1
+        r3 = test_class[2][r3_index]
+        r3.flag = 1
+        r4 = test_class[3][r4_index]
+        r4.flag = 1
+
+
+        number = r1.data + r2.data + r3.data + r4.data
+        print(r1_index, r2_index, r3_index, r4_index, int(number))
+
+        output.append(int(number))
+
+    rang = list(range(0,len(output)))
+    plt.scatter(output, rang)
+    plt.show()
+    
+    print(f'Entrphy of V8: {entropy(output, base=len(output)):.5}')
+
+    hisoComparison(v1, output, v5)
+
+
 
 
 
 
     
-
-
-
-
 
 if __name__ == '__main__':
     main()
