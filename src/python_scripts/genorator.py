@@ -13,7 +13,8 @@ class DataPoint:
         self.flag = flag
         self.row = row
 
-    def get_next_index(self, class_list, n):
+    def get_next_index(self, class_list):
+        n = len(class_list[self.row])
         next_index = (int(self.data / n)) % n
         
         i = 0
@@ -140,12 +141,8 @@ def hisoComparison(data1, data2, data3):
 
 # make all fields the same number of digits
 def weight_fields(data_list, num_size):
-        max_len = 0
         for i in range(len(data_list)):
             num_len = len(str(int(data_list[i])))
-
-            if num_len > max_len:
-                max_len = num_len
 
 
             if num_len < num_size:
@@ -154,8 +151,6 @@ def weight_fields(data_list, num_size):
             if num_len > num_size:
                 data_list[i] = data_list[i] / pow(10, (num_size - num_len))
 
-        print(data_list[0])
-        print(max_len)
         return data_list
 
 # generates a list of random numbers from random library for baseline
@@ -233,14 +228,8 @@ def main():
 
     # df: df (data frame) is all data from provided 00.txt file in an object
     # masterWordList: all fields used in data frame
-    print('reading data...')
     df, masterWordList = read_data()
-    print('data import complete')
 
-
-    print('generating new fields...')
-
-    
 
     # adding test fields by removing numbers before decimal point (101.1234 -> 1234)
     df['TestLatitude'] = (df['Latitude'] % 1)
@@ -248,24 +237,24 @@ def main():
     df['TestEllipseAngle'] = df['EllipseAngle']
     df['TestNano'] = df['Nanosecond'] 
 
+
     # adding new fields to masterWordList
     masterWordList.append('TestLatitude')
     masterWordList.append('TestLongitude')
     masterWordList.append('TestEllipseAngle')
     masterWordList.append('TestNano')
-    print('fields generation complete')
+
 
     # prints entrphy of all rows
     for name in masterWordList:
         try:
             temp = weight_fields(df[name].values.T.tolist(), 9)
-            print(f'Entrphy of {name}: {entropy(temp, base=len(temp)):.5}')
+            print(f'Entrphy of {name:20}: {entropy(temp, base=len(temp)):.5}')
         except:
-            print(f'{name} not working')
+            print(f'Entrphy of {name:20}: NaN')
 
 
-    
-    print('generating all latest versions...')
+
     # generates all versions of the key value based on lightning data
     v0 = version0Gen(df)
     v1 = version1Gen(df)
@@ -275,81 +264,43 @@ def main():
     v5 = version5Gen(df, v4)
     v6 = version6Gen(df, v5)
     v7 = version7Gen(df, v6)
-    print('verion generation complete')
-
-    # prints entrophy of all versions
-    # print(f'Entrphy of V0: {entropy(v0):.5}')
-    # print(f'Entrphy of V1: {entropy(v1):.5}')
-    # print(f'Entrphy of V2: {entropy(v2):.4}')
-    # print(f'Entrphy of V3: {entropy(v3):.4}')
-    # print(f'Entrphy of V4: {entropy(v4):.4}')
-    # print(f'Entrphy of V5: {entropy(v5):.4}')
-    # print(f'Entrphy of V6: {entropy(v6):.5}')
+    v8 = []
 
 
-    print('Plotting hist compare')
-    # gernerates histograms used for senior design presentation
-    #hisoComparison(v1, v5, v5)
-    # scatterPlot(df, v6)
-    print('Graphing complate')
-
-    '''
-
-    # makes a line graph of all data points IOT display iteration
-    plt.plot(list(df['Range'])[:-1], v5, color='blue', marker='|')
-    plt.title('Lightning strike', fontsize=14)
-    plt.xlabel('Year', fontsize=1)
-    plt.ylabel('Number Generated', fontsize=14)
-    plt.grid(True)
-    plt.show()
-
-    '''
-
+    # test is a temp list with all weighted values
     test = []
-    #data_list = df.values.tolist()
-
-    #print(len(data_list))
-
-    '''
-    test.append(df['TestLatitude'].values.T.tolist())
-    test.append(df['TestLongitude'].values.T.tolist())
-    test.append(df['TestEllipseAngle'].values.T.tolist())
-    test.append(df['TestNano'].values.T.tolist())
-    '''
-
-    
-
     test.append(weight_fields(df['TestLatitude'].values.T.tolist(), 9))
     test.append(weight_fields(df['TestLongitude'].values.T.tolist(), 9))
     test.append(weight_fields(df['TestEllipseAngle'].values.T.tolist(), 9))
     test.append(weight_fields(df['TestNano'].values.T.tolist(), 9))
 
                 
-
-
     # adding weighted data to our class list
-    test_class = [[], [], [], []]
-    for i in range(0,4):
-        for j in range(0,1000):
-            test_class[i].append(DataPoint(row = i, data=int(test[i][j]), flag=0))
+    test_class = []
+    i = 0
+    for row in test:
+        test_class.append([])
+        for col in row:
+            test_class[i].append(DataPoint(row = i, data=int(col), flag=0))
+        i = i+1
 
 
+    # base cases for our random number gen
     r1 = test_class[0][0]
     r2 = test_class[1][0]
     r3 = test_class[2][0]
     r4 = test_class[3][0]
 
     
-    output = []
-    n = 1000
-    # generate 20 random numbers
-    for i in range(1000):
+
+    # generates random number
+    for i in range(100000):
 
         
-        r1_index = r1.get_next_index(test_class, 1000)
-        r2_index = r2.get_next_index(test_class, 1000)
-        r3_index = r3.get_next_index(test_class, 1000)
-        r4_index = r4.get_next_index(test_class, 1000)
+        r1_index = r1.get_next_index(test_class)
+        r2_index = r2.get_next_index(test_class)
+        r3_index = r3.get_next_index(test_class)
+        r4_index = r4.get_next_index(test_class)
         
         r1 = test_class[0][r1_index]
         r1.flag = 1
@@ -364,15 +315,33 @@ def main():
         number = r1.data + r2.data + r3.data + r4.data
         # print(r1_index, r2_index, r3_index, r4_index, int(number))
 
-        output.append(int(number))
+        v8.append(int(number))
 
-    rang = list(range(0,len(output)))
-    plt.scatter(output, rang)
-    plt.show()
+    rang = list(range(0,len(v8)))
     
-    print(f'Entrphy of V8: {entropy(output, base=len(output)):.5}')
+    
+    print(f'Entrphy of V8: {entropy(v8, base=len(v8)):.5}')
 
-    hisoComparison(v1, output, v5)
+
+    plt.scatter(v8, rang)
+    plt.grid(True)
+    plt.show()
+
+    hisoComparison(v1, v8, v5)
+
+    plt.plot(rang, v8)
+    plt.grid(True)
+    plt.show()
+
+    '''
+    # makes a line graph of all data points IOT display iteration
+    plt.plot(list(df['Range'])[:-1], v5, color='blue', marker='|')
+    plt.title('Lightning strike', fontsize=14)
+    plt.xlabel('Year', fontsize=1)
+    plt.ylabel('Number Generated', fontsize=14)
+    plt.grid(True)
+    plt.show()
+    '''
 
 
 
