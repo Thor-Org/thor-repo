@@ -137,12 +137,58 @@ def main():
 
     connection.close()
 
+    # Build 2D Array of entire database
+    all_data = []
+
     for key in entire_data_base.keys():
-        stdout.write(f'{key}\n')
         for table in entire_data_base[key]:
             for value in table:
                 stdout.write(f'{value} ')
             stdout.write(f'\n')
+
+def getDatabase():
+    ################################
+    # Gather credential information
+    # Make sure credentials is local to the script importing and using getDatabase
+    ################################
+    credentials_file = open("credentials", 'r')
+    credentials = {} # Used for authorizing the usage of the database
+
+    # Read in credentialing information
+    for line in credentials_file.readlines():
+        key, value = line.rstrip().split(':')
+        credentials[key] = value
+
+    connection = connectToDatabase(credentials)
+
+    all_tables = ["lightning_record"]
+
+    entire_data_base = getAllData(connection,
+                                  "Lightning_Data",
+                                  all_tables)
+
+    connection.close()
+
+    # Build 2D Array of entire database
+    all_data = []
+
+    for key in entire_data_base.keys():
+        for table in entire_data_base[key]:
+            current_line = []
+            for value in table:
+                current_line.append(value)
+            all_data.append(current_line)
+
+    return all_data
+
+def printDatabase(_2d_database):
+    ##############################################################
+    # Print entire 2d list
+    ##############################################################
+    for line in _2d_database:
+        for value in line:
+            stdout.write(f'{value} ')
+        stdout.write(f'\n')
 
 if __name__ == "__main__":
     main()

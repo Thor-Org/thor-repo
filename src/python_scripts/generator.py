@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 from statistics import mean
 import random
 from scipy.stats import entropy
-from hashlib import md5
+
+import getDatabase # Used to get table Lightning_Data.lightning_record only from Database
 
 class DataPoint:
     def __init__(self, row, data, flag):
@@ -21,8 +22,6 @@ class DataPoint:
         next_index = (int(self.data / n)) % n
         next_index = (int(self.data /pow(10, num_len - n_digits))) % n
 
-        
-        
         i = 0
         # if we get a number with flag used recently, we skip, and reflip flag for later use
         while class_list[self.row][next_index].flag == 1:
@@ -37,6 +36,12 @@ class DataPoint:
 
 # returns data frame (df) and word list of all fields imported
 def read_data():
+    ################################################################
+    # Use this instead to get data from the mySQL database
+    ################################################################
+    lightning_records = getDatabase.getDatabase()
+    getDatabase.printDatabase(lightning_records)
+
     # inports the data from local csv
     df = pd.read_csv('./00.txt', sep='	')
 
@@ -44,10 +49,10 @@ def read_data():
     df = df.abs()
 
     masterWordList = ['UFAL', 'NetType', 'Year', 'Month', 'Day', 'Hour',
-                'Minute', 'Second', 'Nanosecond', 'Latitude', 'Longitude', 'Altitude',
-                'AltUncertinty', 'PeakCurrent', 'VFR', 'Multiplicity', 'PulseCount', 'SensorCount',
-                'DegreeOfFreedom', 'EllipseAngle', 'Error1', 'Error2', 'ChiSquard', 'RiseTime',
-                'PeakToZero', 'RateOfRise', 'CloudIndicator', 'AngleIndicator', 'Signal Indicator', 'TimingIndicator']
+                      'Minute', 'Second', 'Nanosecond', 'Latitude', 'Longitude', 'Altitude',
+                      'AltUncertinty', 'PeakCurrent', 'VFR', 'Multiplicity', 'PulseCount', 'SensorCount',
+                      'DegreeOfFreedom', 'EllipseAngle', 'Error1', 'Error2', 'ChiSquard', 'RiseTime',
+                      'PeakToZero', 'RateOfRise', 'CloudIndicator', 'AngleIndicator', 'Signal Indicator', 'TimingIndicator']
 
     df.columns = masterWordList
 
@@ -116,12 +121,9 @@ def hisoComparison(data1, data2, data3):
 
     plt.show()
 
-
-
     '''
     sns.set(rc={"figure.figsize": (15, 6)})
 
-    
     plt.subplot(1,2,1)
     range_in_box = (max(data2) - min(data2)) / 50
     ax = sns.displot(data2, 50, color='b')
@@ -130,16 +132,11 @@ def hisoComparison(data1, data2, data3):
     ax.set_ylabel('How many numbers in bin')
     plt.ylim(1,50)
 
-
-
-
     plt.subplot(1,2,2)
     ax = sns.distplot(data3, 50, color='g')
     ax.set_title('Where we are at')
     ax.set_xlabel(f'Key values per 100Million')
     ax.set_ylabel('How many numbers in bin')
-
-    
 
     plt.show()
 
@@ -236,13 +233,11 @@ def main():
     # masterWordList: all fields used in data frame
     df, masterWordList = read_data()
 
-
     # adding test fields by removing numbers before decimal point (101.1234 -> 1234)
     df['TestLatitude'] = (df['Latitude'] % 1)
     df['TestLongitude'] = (df['Longitude'] % 1)
     df['TestEllipseAngle'] = df['EllipseAngle']
     df['TestNano'] = df['Nanosecond'] 
-
 
     # adding new fields to masterWordList
     masterWordList.append('TestLatitude')
@@ -250,15 +245,13 @@ def main():
     masterWordList.append('TestEllipseAngle')
     masterWordList.append('TestNano')
 
-
     # prints entrphy of all rows
     for name in masterWordList:
         try:
             temp = weight_fields(df[name].values.T.tolist(), 9)
-            print(f'Entrphy of {name:20}: {entropy(temp, base=len(temp)):.5}')
+            print(f'Entropy of {name:20}: {entropy(temp, base=len(temp)):.5}')
         except:
-            print(f'Entrphy of {name:20}: NaN')
-
+            print(f'Entropy of {name:20}: NaN')
 
     # generates all versions of the key value based on lightning data
     v0 = version0Gen(df)
@@ -271,7 +264,6 @@ def main():
     v7 = version7Gen(df, v6)
     v8 = []
 
-
     # test is a temp list with all weighted values
     test = []
     test.append(weight_fields(df['TestLatitude'].values.T.tolist(), 9))
@@ -279,7 +271,6 @@ def main():
     test.append(weight_fields(df['TestEllipseAngle'].values.T.tolist(), 9))
     test.append(weight_fields(df['TestNano'].values.T.tolist(), 9))
 
-                
     # adding weighted data to our class list
     test_class = []
     i = 0
@@ -289,24 +280,19 @@ def main():
             test_class[i].append(DataPoint(row = i, data=int(col), flag=0))
         i = i+1
 
-
     # base cases for our random number gen
     r1 = test_class[0][0]
     r2 = test_class[1][0]
     r3 = test_class[2][0]
     r4 = test_class[3][0]
 
-    
-
     # generates random number
     for i in range(1000):
-
-        
         r1_index = r1.get_next_index(test_class)
         r2_index = r2.get_next_index(test_class)
         r3_index = r3.get_next_index(test_class)
         r4_index = r4.get_next_index(test_class)
-        
+
         r1 = test_class[0][r1_index]
         r1.flag = 1
         r2 = test_class[1][r2_index]
@@ -316,16 +302,14 @@ def main():
         r4 = test_class[3][r4_index]
         r4.flag = 1
 
-
         number = r1.data + r2.data + r3.data + r4.data
         # print(r1_index, r2_index, r3_index, r4_index, int(number))
 
         v8.append(int(number))
 
     rang = list(range(0,len(v8)))
-    
-    
-    print(f'Entrphy of V8: {entropy(v8, base=len(v8)):.5}')
+
+    print(f'Entropy of V8: {entropy(v8, base=len(v8)):.5}')
 
     '''
     plt.scatter(v8, rang)
@@ -352,25 +336,16 @@ def main():
     axs[0].set_xlabel(f'Key values per 100Million')
     axs[0].set_ylabel('Distribution')
 
-    axs[1].plot(rang, v8, color = "m") 
+    axs[1].plot(rang, v8, color = "m")
     axs[1].set_title("V8 Line Graph")
     axs[1].set_xlabel(f'Dot per stike')
     axs[1].set_ylabel('Number size')
 
-    axs[2].scatter(rang, v8, color = "m") 
+    axs[2].scatter(rang, v8, color = "m")
     axs[2].set_title("V8 Scatter")
     axs[2].set_xlabel(f'Dot per strike')
     axs[2].set_ylabel('Number size')
     plt.show()
-
-
-
-
-
-
-
-
-    
 
 if __name__ == '__main__':
     main()
