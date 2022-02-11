@@ -1,15 +1,12 @@
-# <Document_Header Start>
 """
-filename : FullGenerateKey.py
-author : Adonay Pichardo
 description :
-Generates key from database, inserts key into database, and creates MD5 hash
+FullGenerateKey will grab a permutation from the Database and delete the permutation from
+the Database.
+
+FullGenerateKey will return 
 """
-# <Document_Header End>
 
 # <Standard Imports Start>
-# List all imports alphabetically for Python3 standard libraries
-from hashlib import md5
 from sys import argv, stdout
 # <Standard Imports End>
 
@@ -28,12 +25,6 @@ GENERATED_KEYS = "generated_keys"
 MD5_HASHES     = "md5_hashes"
 # <Global Objects End>
 
-# <Classes Start>
-# NONE
-# <Classes End>
-
-# <Functions Start>
-# <Functions End>
 ################################
 # Creates connection to the database server with provided credentials
 # INPUT: credentials - dictionary; contains key,value pairs with credentials for a mysql connection

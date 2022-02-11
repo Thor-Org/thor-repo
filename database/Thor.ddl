@@ -13,12 +13,11 @@ CREATE TABLE IF NOT EXISTS lightning_record(
     PRIMARY KEY (strike_time, nano_seconds)
     );
 
--- crypt
-CREATE TABLE IF NOT EXISTS crypt(
-    strike_time   datetime,
-    nano_seconds  int,
-    generated_key int,
-    PRIMARY KEY (strike_time, nano_seconds)
+-- permutations
+CREATE TABLE IF NOT EXISTS permutations(
+    permutation char(256) NOT NULL,
+    meta_data   char(256) NOT NULL,
+    PRIMARY KEY (permutation)
     );
 
 -- bug_report
