@@ -2,7 +2,11 @@
     Thor: Random Number Genorator utilizing natural phenominon data (lightning data)
 '''
 
-import getDatabase # Used to get table Lightning_Data.lightning_record only from Database
+import getDatabase # Used to get table Lightning_Data.lightning_records only from Database
+
+import mysql.connector
+
+from sys import stdout
 
 class DataPoint:
     def __init__(self, col, data, flag):
@@ -31,6 +35,41 @@ class DataPoint:
         return next_index
 
 
+def insertPermutationsToDataBase(connection, permutations):
+    stdout.write(f'{connection.is_connected()}\n')
+
+    for every_permutation in permutations:
+        try:
+            cursor = connection.cursor()
+            stdout.write(f'INSERT INTO Lightning_Data.permutations VALUES ("{every_permutation}");\n')
+            cursor.execute(f'INSERT INTO Lightning_Data.permutations VALUES ("{every_permutation}");')
+            connection.commit()
+            cursor.close()
+        except Exception as error:
+            stdout.write(f'ERROR!!! {error}\n')
+            stdout.write(f'FAILED!!! INSERT INTO Lightning_Data.permutations VALUES ("{every_permutation}");\n')
+            continue
+
+def insertCombinationsToDataBase(connection, combinations, metaData):
+    for everyList in metaData:
+        for everyField in everyList:
+            stdout.write(f'{everyField.data}, ')
+        stdout.write(f'\n')
+
+    # cursor = connection.cursor()
+
+    # for index in range(len(combinations)):
+    #     try:
+
+    #         stdout.write(f"INSERT INTO Lightning_Data.combinations VALUES ({combinations[index]}, '{sampleTime}',{row[9]},{row[10]},{row[23]},{row[24]},{row[13]});\n")
+    #         # result = cursor.execute(f'INSERT INTO Lightning_Data.combinations VALUES ({combinations[index]}, {metaData[index].data});')
+    #         # stdout.write(f'RESULT: {result}\n')
+    #         cursor.close()
+    #     except:
+    #         stdout.write(f'FAILED!!! INSERT INTO Lightning_Data.combinations VALUES ({combinations[index]}, {metaData[index].data});\n')
+    #         continue
+    #
+    # cursor.commit()
 
 # make all fields the same number of digits
 def weight_fields(data_list, num_size):
@@ -52,28 +91,28 @@ def weight_fields(data_list, num_size):
 
 
 # weights all fields from the database
-def formatData(lightning_record):
+def formatData(lightning_records):
     # 2d list of doubles for the weighted data
     weighted_data = []
 
     # retreives name from first field of database
-    fieldNames = lightning_record[0]
-    del lightning_record[0]
+    fieldNames = lightning_records[0]
+    del lightning_records[0]
 
     # isolates the nanosecond for the use of time
-    for i in range(len(lightning_record)):
-        time, nanoSecond = lightning_record[i][0].split('.')
-        lightning_record[i][0] = nanoSecond
+    for i in range(len(lightning_records)):
+        time, nanoSecond = lightning_records[i][0].split('.')
+        lightning_records[i][0] = nanoSecond
 
     # equally weights all fields
-    weighted_data = weight_fields(lightning_record, 9)
+    weighted_data = weight_fields(lightning_records, 9)
 
     # Update lightning record to a 2d list of datpoint objects
     for i in range(len(weighted_data)):
         for j in range(len(weighted_data[0])):
-            lightning_record[i][j] = DataPoint(col = j, data=int(weighted_data[i][j]), flag=0)
+            lightning_records[i][j] = DataPoint(col = j, data=int(weighted_data[i][j]), flag=0)
 
-    return lightning_record, fieldNames
+    return lightning_records, fieldNames
 
 # prints a specfied ammount of rows in a formatted table
 def print_data(data, number_of_rows, fieldNames):
@@ -125,7 +164,7 @@ def permutationGeneration(data, requested_keys):
     return permuntations
 
 # Combines all equally weighted fields to produce a true key
-def combinationGenoration(data):
+def combinationGeneration(data):
     keys = []
     for row in data:
         keys.append(int(row[0].data+ row[1].data+ row[2].data+ row[3].data))
@@ -138,10 +177,10 @@ def combinationGenoration(data):
 
 def main():
     # pulls the data base using punction from getDatabase.by in the REPO
-    lightning_record = getDatabase.getDatabase()
+    lightning_records = getDatabase.getDatabase()
     
     # retrives formatted and weighted double(2d array of DataPoint obj) and filedNames
-    data, fieldNames = formatData(lightning_record)
+    data, fieldNames = formatData(lightning_records)
 
     # prints the specified number of rows from the data field
     print_data(data, 3, fieldNames)
@@ -150,8 +189,26 @@ def main():
     permutations = permutationGeneration(data, 10000)
 
     # Generates any number of specified permutations
-    combinations = combinationGenoration(data)
+    combinations = combinationGeneration(data)
 
+    # Connect to Thor Database
+    credentials_file = open('credentials', 'r')
+    credentials = {} # Used for authorizing the usage of the database
+
+    # Read in credentialing information
+    for line in credentials_file.readlines():
+        key, value = line.rstrip().split(':')
+        credentials[key] = value
+
+    connection = mysql.connector.connect(host     = credentials['host'],
+                                         user     = credentials['user'],
+                                         password = credentials['password'],
+                                         database = credentials['database'])
+
+    insertPermutationsToDataBase(connection, permutations)
+    # insertCombinationsToDataBase(connection, combinations, data)
+
+    # Close connection
 
 if __name__ == '__main__':
     main()

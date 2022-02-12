@@ -13,16 +13,27 @@ CREATE TABLE IF NOT EXISTS lightning_record(
     PRIMARY KEY (strike_time, nano_seconds)
     );
 
+-- combinations
+CREATE TABLE IF NOT EXISTS combinations(
+    combination  varchar(256) NOT NULL,
+    strike_time  datetime,
+    nano_seconds int,
+    lat          double,
+    lon          double,
+    rise_time    double,
+    fall         double,
+    peakcurrent  int,
+    PRIMARY KEY (combination)
+    );
+
 -- permutations
 CREATE TABLE IF NOT EXISTS permutations(
-    permutation char(256) NOT NULL,
-    meta_data   char(256) NOT NULL,
-    PRIMARY KEY (permutation)
+    permutation varchar(256) NOT NULL,
     );
 
 -- bug_report
 CREATE TABLE IF NOT EXISTS bug_report(
     user    char,
     date    datetime,
-    comment char,
+    comment varchar(200),
     );
