@@ -18,15 +18,6 @@ class DataPoint:
         next_index = (int(self.data / n)) % n
         next_index = (int(self.data /pow(10, num_len - n_digits))) % n
 
-
-
-
-
-
-
-
-
-
         i = 0
         # if we get a number with flag used recently, we skip, and reflip flag for later use
         while class_list[next_index][self.col].flag == 1:
