@@ -3,10 +3,10 @@
 '''
 
 import getDatabase # Used to get table Lightning_Data.lightning_records only from Database
-
 import mysql.connector
 
 from sys import stdout
+from copy import deepcopy
 
 class DataPoint:
     def __init__(self, col, data, flag):
@@ -34,7 +34,6 @@ class DataPoint:
 
         return next_index
 
-
 def insertPermutationsToDataBase(connection, permutations):
     stdout.write(f'{connection.is_connected()}\n')
 
@@ -43,34 +42,32 @@ def insertPermutationsToDataBase(connection, permutations):
             cursor = connection.cursor()
             stdout.write(f'INSERT INTO Lightning_Data.permutations VALUES ("{every_permutation}");\n')
             cursor.execute(f'INSERT INTO Lightning_Data.permutations VALUES ("{every_permutation}");')
-            connection.commit()
             cursor.close()
         except Exception as error:
             stdout.write(f'ERROR!!! {error}\n')
             stdout.write(f'FAILED!!! INSERT INTO Lightning_Data.permutations VALUES ("{every_permutation}");\n')
             continue
 
-def insertCombinationsToDataBase(connection, combinations, metaData):
-    for everyList in metaData:
-        for everyField in everyList:
-            stdout.write(f'{everyField.data}, ')
-        stdout.write(f'\n')
+def insertCombinationsToDataBase(connection, combinations, meta_data):
+    # Remove the head of the 2d list
+    meta_data = meta_data[1:]
 
-    # cursor = connection.cursor()
+    for index in range(len(combinations)):
+        # Parse the time
+        strike_time, NN = meta_data[index][0].split(".")
 
-    # for index in range(len(combinations)):
-    #     try:
-
-    #         stdout.write(f"INSERT INTO Lightning_Data.combinations VALUES ({combinations[index]}, '{sampleTime}',{row[9]},{row[10]},{row[23]},{row[24]},{row[13]});\n")
-    #         # result = cursor.execute(f'INSERT INTO Lightning_Data.combinations VALUES ({combinations[index]}, {metaData[index].data});')
-    #         # stdout.write(f'RESULT: {result}\n')
-    #         cursor.close()
-    #     except:
-    #         stdout.write(f'FAILED!!! INSERT INTO Lightning_Data.combinations VALUES ({combinations[index]}, {metaData[index].data});\n')
-    #         continue
-    #
-    # cursor.commit()
-
+        try:
+            cursor = connection.cursor()
+            stdout.write(f"INSERT INTO Lightning_Data.combinations VALUES ({combinations[index]},'{strike_time}',{NN},{meta_data[index][1]},{meta_data[index][2]},{meta_data[index][3]},{meta_data[index][4]},{meta_data[index][5]});\n")
+            result = cursor.execute(f"INSERT INTO Lightning_Data.combinations VALUES ({combinations[index]},'{strike_time}',{NN},{meta_data[index][1]},{meta_data[index][2]},{meta_data[index][3]},{meta_data[index][4]},{meta_data[index][5]});\n")
+            connection.commit()
+            cursor.close()
+            pass
+        except Exception as error:
+            stdout.write(f'ERROR!!! {error}\n')
+            stdout.write(f"FAILED!!! INSERT INTO Lightning_Data.combinations VALUES ({combinations[index]},'{strike_time}',{NN},{meta_data[index][1]},{meta_data[index][2]},{meta_data[index][3]},{meta_data[index][4]},{meta_data[index][5]});\n")
+            continue
+    
 # make all fields the same number of digits
 def weight_fields(data_list, num_size):
 
@@ -87,8 +84,6 @@ def weight_fields(data_list, num_size):
                 data_list[i][j] = data_list[i][j] / pow(10, (num_size - num_len))
 
     return data_list
-
-
 
 # weights all fields from the database
 def formatData(lightning_records):
@@ -174,16 +169,13 @@ def combinationGeneration(data):
 
     return keys
 
-
 def main():
     # pulls the data base using punction from getDatabase.by in the REPO
     lightning_records = getDatabase.getDatabase()
+    temp_copy = deepcopy(lightning_records)
     
     # retrives formatted and weighted double(2d array of DataPoint obj) and filedNames
     data, fieldNames = formatData(lightning_records)
-
-    # prints the specified number of rows from the data field
-    print_data(data, 3, fieldNames)
 
     # Generates any number of specified permutations
     permutations = permutationGeneration(data, 10000)
@@ -206,9 +198,13 @@ def main():
                                          database = credentials['database'])
 
     insertPermutationsToDataBase(connection, permutations)
-    # insertCombinationsToDataBase(connection, combinations, data)
+    connection.commit()
+
+    insertCombinationsToDataBase(connection, combinations, temp_copy)
+    connection.commit()
 
     # Close connection
+    connection.close()
 
 if __name__ == '__main__':
     main()
