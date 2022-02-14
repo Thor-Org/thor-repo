@@ -3,6 +3,8 @@ Python command:
 
 $command = 'python3 encryptUserFile.py test.txt';
 exec($command, $output, $status);
-echo $output[0];
+foreach ($output as $value) {
+    echo $value, "\n";
+}
 
 ?>
