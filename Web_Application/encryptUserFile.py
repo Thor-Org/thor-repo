@@ -117,7 +117,7 @@ def main():
     cipher = AES.new(key, AES.MODE_EAX, nonce)
     data = cipher.decrypt_and_verify(ciphertext, tag)
 
-    stdout.write(f'\n{str(data)[2:-3]}\n')
+    # stdout.write(f'\n{str(data)[2:-3]}\n')
 
 if __name__ == "__main__":
     main()
