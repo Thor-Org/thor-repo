@@ -1,10 +1,7 @@
 Python command:
 <?php
-
-$command = 'python3 encryptUserFile.py test.txt';
-# $command = 'ls';
-exec($command, $output, $status);
-echo $output[0];
-echo var_dump($output)
-
+$command1 = escapeshellcmd("python3 MD5Hash.py 1");
+$output = shell_exec($command1);
+echo "<br>Hash: ";
+echo $output;
 ?>
