@@ -4,9 +4,7 @@ Python command:
 $command = 'python3 encryptUserFile.py test2.txt';
 # $command = 'ls';
 exec($command, $output, $status);
-foreach ($output as $value) {
-    echo $value, "\n";
-}
+eco $output;
 echo var_dump($output)
 
 ?>
