@@ -2,7 +2,8 @@ Python command:
 <?php
 
 $command = 'python3 encryptUserFile.py test.txt';
-exec($command, $output, $status);
+system($command, $output, $status);
 echo $output;
+echo $status;
 
 ?>
