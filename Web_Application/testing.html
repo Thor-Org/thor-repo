@@ -78,19 +78,20 @@ echo "Server: Connected<br>";
 </div>
 
 
-
+<br>
 button:
 <button class="btn btn-primary" data-bs-toggle="tooltip" value="button1" name="button1" type="submit" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;"><i class="fa fa-refresh"></i>   Generate Key</button>
+<br>
 
-
+<br>
 tex and key:
 <?php
 echo $tex;
 echo $key;
 ?>
+<br>
 
-
-
+<br>
 <h2 style="font-size: 43px;margin: 0px;">Key: <?php echo $key ?>
 <?php
 $command1 = escapeshellcmd("python3 MD5Hash.py $key");
@@ -100,22 +101,22 @@ echo $output;
 
 ?>
 </h2>
-
+<br>
 
 
 <br><br><br><br><br><br>
 <h3 class="text-start" style="margin: 35px;text-align:center !important;"> <?php echo $lat;?>, <?php echo $lon;?></h3>
-
+<br>
 
 <div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=<?php echo $lat;?>,<?php echo $lon;?>&t=k&z=3&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.embedgooglemap.org">embed google maps</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div>
 
 
-
+<br>
 blue data boxes:
 <div><?php echo $fall;?> <br>fall</div>
 <div><?php echo $rise;?> <br>seconds</div>
 <div><?php echo $peak;?> <br>MWh</div>
-
+<br>
 
 
 
