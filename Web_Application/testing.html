@@ -143,7 +143,7 @@ echo "Server: Connected<br>";
       $extensions= array("jpeg","jpg","png","txt");
 
       if(in_array($file_ext,$extensions)=== false){
-         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+         $errors[]="extension not allowed, please choose a JPEG, PNG or TXT file.";
       }
 
       if($file_size > 2097152) {
