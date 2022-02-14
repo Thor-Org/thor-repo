@@ -169,6 +169,8 @@ echo "Server: Connected<br>";
             <li>Sent file: <?php echo $_FILES['image']['name'];  ?>
             <li>File size: <?php echo $_FILES['image']['size'];  ?>
             <li>File type: <?php echo $_FILES['image']['type'] ?>
+            <li>Encrypted File: <?php echo $_FILES['image']['name'] ?><a href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_ENCRYPTED">Download Encrypted File</a>
+            <li>Receipt: <?php echo $_FILES['image']['name'] ?><a href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_RECEIPT">Download Receipt File</a>
          </ul>
 
       </form>
