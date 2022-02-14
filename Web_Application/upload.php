@@ -47,8 +47,3 @@ if ($uploadOk == 0) {
   }
 }
 ?>
-<br>
-<br>
-<br>
-Complete PHP Filesystem Reference
-For a complete reference of filesystem functions, go to our complete PHP Filesystem Reference.
