@@ -29,7 +29,7 @@ echo $output;
          move_uploaded_file($file_tmp,"uploads/".$file_name);
          echo "Success";
 
-          $command3 = escapeshellcmd("python3 encryptUserFile.py $_FILES['image']['name']");
+          $command3 = escapeshellcmd("python3 encryptUserFile.py $file_name");
           $output = shell_exec($command3);
           echo "<br>Combo: ";
           echo $output;
