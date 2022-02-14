@@ -128,6 +128,46 @@ echo "Server: Connected<br>";
 
 </div>
 
+<!-- <?php
+if(isset($_POST['button1'])) {
+    $sql = "SELECT * FROM Lightning_Data.lightning_record
+            ORDER BY RAND()
+            LIMIT 1";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+      // output data of each row
+      while($row = $result->fetch_assoc()) {
+        $strike_time = $row["strike_time"];
+        $lat = $row["lat"];
+        $lon =$row["lon"];
+        $rise = $row["rise_time"];
+        $fall = $row["fall"];
+        $peak = $row["peak_cur"];
+        $tex = "Key: ";
+        //echo "Strike time: $strike_time lat: $lat lon: $lon ";
+        //echo $lon;
+        // echo "strike_time: " . $row["strike_time"]. " - lat: " . $row["lat"]. " - lon: " . $row["lon"]. "<br>";
+        // echo "strike_time: " . $strike_time. " - lat: " . $lat. " - lon: " . $lon. "<br>";
+      }
+      $result->free();
+    } else {
+      echo "0 results";
+    }
+?> -->
+
+<?php
+if(isset($_POST['button2'])) {
+  // echo "This is Button2 that is selected with" .$strike_time.;
+  $command1 = escapeshellcmd("python3 MD5Hash.py $key");
+  $output = shell_exec($command1);
+  echo "<br>Hash: ";
+  echo $output;
+
+}
+?>
+
+
 
 <!-- Upload function -->
 <!-- https://www.tutorialspoint.com/php/php_file_uploading.htm -->
@@ -142,9 +182,9 @@ echo "Server: Connected<br>";
 
       $extensions= array("jpeg","jpg","png");
 
-      if(in_array($file_ext,$extensions)=== false){
-         $errors[]="extension not allowed, please choose a JPEG or PNG file.";
-      }
+      //if(in_array($file_ext,$extensions)=== false){
+      //   $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+      //}
 
       if($file_size > 2097152) {
          $errors[]='File size must be excately 2 MB';
