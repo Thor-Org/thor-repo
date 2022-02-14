@@ -154,10 +154,10 @@ echo "Server: Connected<br>";
          move_uploaded_file($file_tmp,"uploads/".$file_name);
          echo "Success";
 
-         $command3 = escapeshellcmd("python3 encryptUserFile.py $_FILES['image']['name']");
-         $output = shell_exec($command3);
-         echo "<br>Combo: ";
-         echo $output;
+         # $command3 = escapeshellcmd("python3 encryptUserFile.py $_FILES['image']['name']");
+         # $output = shell_exec($command3);
+         # echo "<br>Combo: ";
+         # echo $output;
       }else{
          print_r($errors);
       }
