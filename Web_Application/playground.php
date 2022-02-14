@@ -6,71 +6,55 @@ echo "<br>Combo: ";
 echo $output;
 ?>
 
-
 <?php
-$servername = "192.168.1.5";
-$username = "root";
-$password = "Sadie1289";
+   if(isset($_FILES['image'])){
+      $errors= array();
+      $file_name = $_FILES['image']['name'];
+      $file_size = $_FILES['image']['size'];
+      $file_tmp = $_FILES['image']['tmp_name'];
+      $file_type = $_FILES['image']['type'];
+      $file_ext=strtolower(end(explode('.',$_FILES['image']['name'])));
 
-// Create connection
-$conn = new mysqli($servername, $username, $password);
+      $extensions= array("jpeg","jpg","png","txt");
 
-// Check connection
-if ($conn->connect_error) {
-  die("Server: Connection failed: " . $conn->connect_error);
-}
-echo "Server: Connected<br>";
+      if(in_array($file_ext,$extensions)=== false){
+         $errors[]="extension not allowed, please choose a JPEG, PNG or TXT file.";
+      }
+
+      if($file_size > 2097152) {
+         $errors[]='File size must be exactly 2 MB';
+      }
+
+      if(empty($errors)==true) {
+         move_uploaded_file($file_tmp,"uploads/".$file_name);
+         echo "Success";
+
+          $command3 = escapeshellcmd("python3 encryptUserFile.py $_FILES['image']['name']");
+          $output = shell_exec($command3);
+          echo "<br>Combo: ";
+          echo $output;
+      }else{
+         print_r($errors);
+      }
+   }
 ?>
 
-<?php
-          if(isset($_POST['button1'])) {
-              $sql = "SELECT * FROM Lightning_Data.combinations
-                      ORDER BY RAND()
-                      LIMIT 1";
-              $result = $conn->query($sql);
+<html>
+   <body>
 
-              if ($result->num_rows > 0) {
-                // output data of each row
-                while($row = $result->fetch_assoc()) {
-                  $combination = $row["combination"];
-                  $strike_time = $row["strike_time"];
-                  $nano_seconds = $row["nano_seconds"];
-                  $lat = $row["lat"];
-                  $lon =$row["lon"];
-                  $rise = $row["rise_time"];
-                  $fall = $row["fall"];
-                  $peak = $row["peak_cur"];
-                  //$tex = "Key: ";
-                  //echo "Strike time: $strike_time lat: $lat lon: $lon ";
-                  //echo $lon;
-                  // echo "strike_time: " . $row["strike_time"]. " - lat: " . $row["lat"]. " - lon: " . $row["lon"]. "<br>";
-                  // echo "strike_time: " . $strike_time. " - lat: " . $lat. " - lon: " . $lon. "<br>";
-                }
-                $result->free();
-              } else {
-                echo "0 results";
-              }
+      <form action = "" method = "POST" enctype = "multipart/form-data">
+         <input type = "file" name = "image" />
+         <input value="button3" name="button3" type = "submit"/>
 
-              $sql2 = "SELECT * FROM Lightning_Data.keys
-                      ORDER BY RAND()
-                      LIMIT 1";
-              $result2 = $conn->query($sql2);
+         <ul>
+            <li>Sent file: <?php echo $_FILES['image']['name'];  ?>
+            <li>File size: <?php echo $_FILES['image']['size'];  ?>
+            <li>File type: <?php echo $_FILES['image']['type'] ?>
+            <li>Encrypted File: <?php echo $_FILES['image']['name'] ?>_ENCRYPTED <a href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_ENCRYPTED"> Download Encrypted File</a>
+            <li>Receipt: <?php echo $_FILES['image']['name'] ?>_RECEIPT <a href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_RECEIPT"> Download Receipt File</a>
+         </ul>
 
-              if ($result2->num_rows > 0) {
-                // output data of each row
-                while($row2 = $result2->fetch_assoc()) {
-                  $key =$row2["key"];
-                }
-                $result2->free();
-              } else {
-                echo "0 keys";
-              }
+      </form>
 
-          }
-          if(isset($_POST['button2'])) {
-            // echo "This is Button2 that is selected with" .$strike_time.;
-            echo $strike_time;
-            echo $lat;
-            echo $lon;
-        }
-      ?>
+   </body>
+</html>
