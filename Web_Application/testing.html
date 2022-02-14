@@ -158,12 +158,20 @@ echo "Server: Connected<br>";
       }
    }
 ?>
+<?php
+if(isset($_POST['button3'])) {
+  $command3 = escapeshellcmd("python3 encryptUserFile.py $_FILES['image']['name']");
+  $output = shell_exec($command3);
+  echo "<br>Combo: ";
+  echo $output;
+}
+?>
 <html>
    <body>
 
       <form action = "" method = "POST" enctype = "multipart/form-data">
          <input type = "file" name = "image" />
-         <input type = "submit"/>
+         <input value="button3" name="button3" type = "submit"/>
 
          <ul>
             <li>Sent file: <?php echo $_FILES['image']['name'];  ?>
