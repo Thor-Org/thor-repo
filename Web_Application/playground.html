@@ -3,7 +3,7 @@ Python command:
 
 $command = 'python3 encryptUserFile.py test.txt';
 exec($command, $output, $status);
-echo $output;
+echo $output[0];
 echo $status;
 
 ?>
