@@ -32,7 +32,7 @@ echo "Server: Connected<br>";
               if ($result->num_rows > 0) {
                 // output data of each row
                 while($row = $result->fetch_assoc()) {
-                  $combination = $row["combination"]
+                  $combination = $row["combination"];
                   $strike_time = $row["strike_time"];
                   $nano_seconds = $row["nano_seconds"];
                   $lat = $row["lat"];
