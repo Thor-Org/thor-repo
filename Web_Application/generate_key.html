@@ -78,7 +78,7 @@ echo "Server: Connected<br>";
                   $lon =$row["lon"];
                   $rise = $row["rise_time"];
                   $fall = $row["fall"];
-                  $peak = $row["peak_cur"];
+                  $peak = $row["peakcurrent"];
                   //$tex = "Key: ";
                   //echo "Strike time: $strike_time lat: $lat lon: $lon ";
                   //echo $lon;
@@ -123,7 +123,19 @@ echo "Combination #:";
 echo $combination;
 echo "<br>";
 echo $key;
-?>
+?>      <form action = "" method = "POST" enctype = "multipart/form-data">
+         <input type = "file" name = "image" />
+         <input class="btn btn-primary" style="background: #f9603a;border-radius: 8px;" value="Upload File" name="button3" type = "submit"/>
+
+         <ul>
+            <li>Sent file: <?php echo $_FILES['image']['name'];  ?>
+            <li>File size: <?php echo $_FILES['image']['size'];  ?>
+            <li>File type: <?php echo $_FILES['image']['type'] ?>
+            <li>Encrypted File: <?php echo $_FILES['image']['name'] ?>_ENCRYPTED <a href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_ENCRYPTED"> Download Encrypted File</a>
+            <li>Receipt: <?php echo $_FILES['image']['name'] ?>_RECEIPT <a href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_RECEIPT"> Download Receipt File</a>
+         </ul>
+
+      </form>
         </div>
     </header>
     <section class="text-center content-section" id="about">
