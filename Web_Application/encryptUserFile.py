@@ -34,7 +34,8 @@ def getCombination():
         cursor.close()
         connection.close()
 
-        print(f'{result}\n')
+        # stdout.write(f'{result}\n')
+        print(f'{result}')
         return result
 
     except Exception as error:
