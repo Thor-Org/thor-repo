@@ -73,7 +73,7 @@ def recordKeyUsed(key):
 # Functions
 def main():
     # Read in file
-    targetFile = open("../../uploads/" + argv[1], 'r')
+    targetFile = open("../uploads/" + argv[1], 'r')
     targetFile = targetFile.read()
 
     # Encode for AES
@@ -99,18 +99,18 @@ def main():
     cipher = AES.new(key, AES.MODE_EAX)
     ciphertext, tag = cipher.encrypt_and_digest(targetFile)
 
-    fileOut = open("../../uploads/" + argv[1] + "_ENCRYPTED", "wb")
+    fileOut = open("../uploads/" + argv[1] + "_ENCRYPTED", "wb")
     [ fileOut.write(x) for x in (cipher.nonce, tag, ciphertext) ]
     fileOut.close()
 
-    fileOut = open("../../uploads/" + argv[1] + "_RECEIPT", "w")
+    fileOut = open("../uploads/" + argv[1] + "_RECEIPT", "w")
     fileOut.write(f'File:_> {argv[1]}\nEncryption:_> AES\nKey:_> {str(key)[2:-3]}\n')
     fileOut.close()
 
     # ################################
     # # Decrypt
     # ################################
-    fileIn = open("../../uploads/" + argv[1] + "_ENCRYPTED", "rb")
+    fileIn = open("../uploads/" + argv[1] + "_ENCRYPTED", "rb")
     nonce, tag, ciphertext = [ fileIn.read(x) for x in (16, 16, -1) ]
 
     # let's assume that the key is somehow available again
