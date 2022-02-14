@@ -130,6 +130,7 @@ echo "Server: Connected<br>";
 
 
 <!-- Upload function -->
+<!-- https://www.tutorialspoint.com/php/php_file_uploading.htm -->
 <?php
    if(isset($_FILES['image'])){
       $errors= array();
@@ -150,7 +151,7 @@ echo "Server: Connected<br>";
       }
 
       if(empty($errors)==true) {
-         move_uploaded_file($file_tmp,"uploads/".$file_name);
+         move_uploaded_file($file_tmp,"../uploads/".$file_name);
          echo "Success";
       }else{
          print_r($errors);
