@@ -1,7 +1,8 @@
 Python command:
 <?php
 
-$command = 'python3 encryptUserFile.py test.txt';
+# $command = 'python3 encryptUserFile.py test.txt';
+$command = 'ls';
 exec($command, $output, $status);
 foreach ($output as $value) {
     echo $value, "\n";
