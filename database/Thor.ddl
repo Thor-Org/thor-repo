@@ -26,6 +26,11 @@ CREATE TABLE IF NOT EXISTS combinations(
     PRIMARY KEY (combination)
     );
 
+-- keys_used
+CREATE TABLE IF NOT EXISTS keys_used(
+    used_key  varchar(256) NOT NULL,
+    );
+
 -- permutations
 CREATE TABLE IF NOT EXISTS permutations(
     permutation varchar(256) NOT NULL,
