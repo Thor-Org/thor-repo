@@ -115,7 +115,9 @@ echo "Server: Connected<br>";
       ?>
 
 </div>
-                        <form method="post"><button class="btn btn-primary" data-bs-toggle="tooltip" value="button1" name="button1" type="submit" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;"><i class="fa fa-refresh"></i>   Generate Key</button></form>
+                        <form method="post"><br>
+<button class="btn btn-primary" data-bs-toggle="tooltip" value="button1" name="button1" type="submit" title="Select to generate your key" style="background: #f9603a;border-radius: 8px;"><i class="fa fa-refresh"></i>   Generate Key</button>
+<br></form>
                     </div>
                 </div>
             </div><?php
@@ -128,7 +130,7 @@ if (empty($combination)){
     echo "<br>";
     //echo $key;
 }
-?>
+?><br>
 
 <form action = "" method = "POST" enctype = "multipart/form-data">
          <input type = "file" name = "image" />
