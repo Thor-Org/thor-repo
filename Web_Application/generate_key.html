@@ -42,7 +42,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <h1>Generate&nbsp;Your Encryption&nbsp;Key[S]</h1>
+                        <h1>Generate&nbsp;Your Encryption&nbsp;Key</h1>
                         <p style="margin: 0px;">Click the button below to generate an md5 encryption</p>
                         <p>key from our set of lightning data.</p><div>
     
@@ -123,19 +123,18 @@ echo "Combination #";
 echo $combination;
 echo "<br>";
 //echo $key;
-?>      <form action = "" method = "POST" enctype = "multipart/form-data">
-         <input type = "file" name = "image" />
-         <input class="btn btn-primary" style="background: #f9603a;border-radius: 8px;" value="Upload File" name="button3" type = "submit"/>
+?>
 
-         <ul>
-            <li>Sent file: <?php echo $_FILES['image']['name'];  ?>
-            <li>File size: <?php echo $_FILES['image']['size'];  ?>
-            <li>File type: <?php echo $_FILES['image']['type'] ?>
-            <li>Encrypted File: <?php echo $_FILES['image']['name'] ?>_ENCRYPTED <a href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_ENCRYPTED"> Download Encrypted File</a>
-            <li>Receipt: <?php echo $_FILES['image']['name'] ?>_RECEIPT <a href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_RECEIPT"> Download Receipt File</a>
-         </ul>
-
-      </form>
+<?php
+// if empty
+if (empty($$combination)){
+    $show = 'none';
+} else {
+    echo "Combination #";
+    echo $combination;
+    echo "<br>";
+}
+?>
 
 <form action = "" method = "POST" enctype = "multipart/form-data">
          <input type = "file" name = "image" />
@@ -157,8 +156,7 @@ if (empty($_FILES)){
               <br>
               Type: <?php echo $_FILES['image']['type']; ?>
           </p>
-    <br>
-    
+     
     <div style="display: <?php echo $show; ?>";>
         <a style="background: #f9603a;border-radius: 8px;" class="btn btn-primary" href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_ENCRYPTED">
             Download Encrypted File
