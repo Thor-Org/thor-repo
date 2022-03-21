@@ -169,14 +169,17 @@ if (empty($_FILES)){
         <div class="container">
             <div class="row">
                 <div class="col-auto col-lg-8 col-xl-10 mx-auto">
-                    <h2 style="font-size: 43px;margin: 0px;">&nbsp;</h2><h2 style="font-size: 43px;margin: 0px;">Key: <?php echo $key ?>
+                    <h2 style="font-size: 43px;margin: 0px;">&nbsp;</h2><h2 hidden style="font-size: 43px;margin: 0px;">Key: <?php echo $key ?>
 <?php
 $command1 = escapeshellcmd("python3 MD5Hash.py $key");
 $output = shell_exec($command1);
 echo "<br>Hash: ";
 echo $output;
-
 ?>
+</h2>
+
+<h2 style="font-size: 43px;margin: 0px;">
+    Combination: <?php echo $combination; ?>
 </h2>
                     <h2 style="font-size: 43px;margin: 0px;">BIOGRAPHY</h2>
                 </div>
@@ -193,6 +196,12 @@ echo $output;
 
                 </div>
                 <div class="col" style="margin-top: 25px;">
+                    <h2>When did strike happen?</h2><h3 class="text-start" style="margin: 35px;text-align:center !important;">
+    <?php echo $$strike_time;?>.
+</h3>
+
+
+
                     <div class="table-responsive">
                         <table class="table table-borderless">
                             <tbody style="color: var(--bs-light);">
