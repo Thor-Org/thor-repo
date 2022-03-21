@@ -152,19 +152,24 @@ if (empty($_FILES)){
 
           <p style="display: <?php echo $show; ?>;">
               Your File: <?php echo $_FILES['image']['name'];  ?> 
+              <br>
               Size: <?php echo $_FILES['image']['size'];  ?> bytes
+              <br>
               Type: <?php echo $_FILES['image']['type']; ?>
           </p>
-          
-          <a style="background: #f9603a;border-radius: 8px;" class="btn btn-primary" href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_ENCRYPTED">
-              Download Encrypted File
-          </a>
-          
-          <a style="background: #f9603a;border-radius: 8px;" class="btn btn-primary" href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_RECEIPT">
-              Download Receipt File
-          </a>
+    <br>
+    
+    <div style="display: <?php echo $show; ?>";>
+        <a style="background: #f9603a;border-radius: 8px;" class="btn btn-primary" href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_ENCRYPTED">
+            Download Encrypted File
+        </a>
 
-      </form>
+        <a style="background: #f9603a;border-radius: 8px;" class="btn btn-primary" href="http://97.102.250.88/uploads/<?php echo $_FILES['image']['name'] ?>_RECEIPT">
+            Download Receipt File
+        </a>
+    </div>
+
+</form>
             <div></div>
         </div>
     </header>
