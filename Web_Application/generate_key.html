@@ -150,7 +150,7 @@ if (empty($_FILES)){
 }
 ?>
 
-          <p>
+          <p style="display: <?php echo $show; ?>;">
               Your File: <?php echo $_FILES['image']['name'];  ?> 
               Size: <?php echo $_FILES['image']['size'];  ?> bytes
               Type: <?php echo $_FILES['image']['type']; ?>
