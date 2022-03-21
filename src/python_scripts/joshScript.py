@@ -130,7 +130,7 @@ def main():
     data, fieldNames = formatData(lightning_records)
 
     # Generates any number of specified permutations
-    permutations = permutationGeneration(data, 10)
+    permutations = permutationGeneration(data, 1000000)
 
     outputFile = open('joshsNumbers.txt', 'w+')
     outputFile.write("""\
@@ -140,7 +140,6 @@ def main():
 type: d
 count: 1000000
 numbit: 32
-
 """)
 
     for every_perm in permutations:
