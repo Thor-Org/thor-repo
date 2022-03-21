@@ -141,7 +141,14 @@ echo "<br>";
          <input type = "file" name = "image" />
          <input class="btn btn-primary" style="background: #f9603a;border-radius: 8px;" value="Upload File" name="button3" type = "submit"/>
 
-
+<?php
+// if empty
+if (empty($_FILES)){
+    $show = 'none';
+} else {
+    $show = 'show';
+}
+?>
 
           <p>
               Your File: <?php echo $_FILES['image']['name'];  ?> 
