@@ -272,20 +272,32 @@ echo $output;
 </div>
                 <div class="col-md-2">
                     <div class="card bg-secondary">
-                        <div class="card-body"><div><?php echo $fall;?> <br>micro secs</div>
-                            <p class="text-start">fall time</p>
+                        <div class="card-body"><div class="text-center"><?php echo $fall;?> <br>micro secs</div>
+                            <p class="text-center">fall time</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2"><div><?php echo $rise;?> <br>micro secs</div>
-                    <p class="text-start">waveform rise</p>
+                <div class="col-md-2">
+                    <div class="card bg-secondary">
+                        <div class="card-body"><div class="text-center"><?php echo $rise;?> <br>micro secs</div>
+                            <p class="text-center">waveform rise</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2"><div><?php echo $peak;?> <br>KILOAMPS</div>
+                <div class="col-md-2">
+                    <div class="card bg-secondary">
+                        <div class="card-body"><div class="text-center"><?php echo $peak;?> <br>KILOAMPS</div>
 
-                    <p class="text-start">power output</p>
+                            <p class="text-center">power output</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2"><div><?php echo $nano_seconds;?> <br>NANO SECS</div>
-                    <p class="text-start">occurred at</p>
+                <div class="col-md-2">
+                    <div class="card bg-secondary">
+                        <div class="card-body"><div class="text-center"><?php echo $nano_seconds;?> <br>NANO SECS</div>
+                            <p class="text-center">occurred at</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
