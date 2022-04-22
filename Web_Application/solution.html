@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/fonts/material-icons.min.css">
     <link rel="stylesheet" href="assets/css/Animated-numbers-section.css">
     <link rel="stylesheet" href="assets/css/Footer-Dark.css">
     <link rel="stylesheet" href="assets/css/Highlight-Blue.css">
@@ -42,7 +43,7 @@
             <div class="container" style="height: 4000px;">
                 <div class="row">
                     <div class="col" style="height: 2350.92px;padding: 90px 12px 0px;padding-top: 110px;">
-                        <h1 style="color: var(--bs-body-color);">Title</h1>
+                        <h1 style="color: var(--bs-body-color);">Creating Randomness</h1>
                         <p style="color: var(--bs-gray);font-size: 14px;margin-bottom: 10px;">3/20/2022</p>
                         <p style="color: var(--bs-dark);font-size: 14px;">by Josh Temel</p><img src="assets/img/20_0112_st_cybersecurity1.jpeg" style="width: 700px;padding-bottom: 25px;">
                         <h3 class="text-start" style="color: var(--bs-body-color);">Introduction</h3>
@@ -54,9 +55,9 @@
                         <p class="text-center" style="color: var(--bs-body-color);font-size: 16px;">What makes Project Thor different is that rather than using the lava in lava lamps for our source of entropy, we have chosen to use data that has been gathered by measuring lightning strikes. We believe this to be a better source of entropy because it isn't drawn from a custom system, but rather from an already established lightning database called the Global Lightning Detection Network (GLD360). This will help to make Project Thor more scalable and more applicable to other cryptography application such as encryption decryption services while keeping costs low for any potential developers. Additionally, Project Thor draws our randomness from both inherent properties of lightning and from the unpredictability of measurements as we will discuss in further detail later in this article.&nbsp;</p>
                         <h3 class="text-start" style="color: var(--bs-body-color);">design</h3><img src="assets/img/Data%20Flow%20Diagram.png" style="width: 1080px;box-shadow: 0px 0px;border: 1px solid var(--bs-gray-900);border-radius: 4px;margin-bottom: 35px;">
                         <p class="text-center" style="color: var(--bs-body-color);font-size: 16px;">The overall design for the flow of data through Project Thor is pictured above. Each stage that the data passes through can be broken down into the following steps:</p>
-                        <p class="text-center" style="color: var(--bs-body-color);font-size: 16px;">Finish adding steps here</p>
-                        <p class="text-center" style="color: var(--bs-body-color);font-size: 16px;">Text Here</p>
-                        <p class="text-center" style="color: var(--bs-body-color);font-size: 16px;">Text Here</p>
+                        <p class="text-center" style="color: var(--bs-body-color);font-size: 16px;">First the data is imported from an ASCII text file and converted to a CSV file for easier data manipulation. The data is then filtered so that only the desired data fields remain. Then the data is added to our existing SQL database where it will be used to generate random numbers.</p>
+                        <p class="text-center" style="color: var(--bs-body-color);font-size: 16px;">Of the approximately 30 data fields in the original ASCII file only 5 have been kept. In order to generate a random number these 5 fields must be combined in a fair manner. Our team accomplished this by using our data and a hash like algorithm to randomly select one piece of data from each field. Then each piece of data is padded with zeros until they have the same number of digits. This assures that one data field won't have more influence one the final result than all of the others. Finally, all of the strings of data are simply added together in order to create our final random number.</p>
+                        <p class="text-center" style="color: var(--bs-body-color);font-size: 16px;">Each random number is then used on our web application as a key to encrypt files. Additionally, they are recorded within our database for later analysis. However, it should be noted that in a real world application they wouldn't be recorded for security purposes.</p>
                     </div>
                 </div>
             </div>
